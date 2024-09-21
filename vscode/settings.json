@@ -1,4 +1,9 @@
 {
+    "boot-java.rewrite.reconcile": true,
+    "java.jdt.ls.java.home": "c:\\Program Files\\Java\\jdk-17",
+    "[java]": {
+        "javascript.autoClosingTags": false
+    },
     "editor.formatOnSave": false,
     "redhat.telemetry.enabled": false,
     "java.compile.nullAnalysis.nullable": [
@@ -6,7 +11,7 @@
         "org.eclipse.jdt.annotation.Nullable",
         "org.springframework.lang.Nullable"
     ],
-    "workbench.iconTheme": "symbols",
+    // "workbench.iconTheme": "symbols",
     "editor.lineNumbers": "relative",
     "editor.minimap.enabled": false,
     "editor.fontLigatures": true,
@@ -82,7 +87,7 @@
     "editor.cursorStyle": "block",
     "editor.cursorBlinking": "smooth",
     "editor.cursorSmoothCaretAnimation": "on",
-    "glassit.alpha": 235,
+    "glassit.alpha": 255,
     "workbench.activityBar.location": "hidden",
     "php.validate.executablePath": "",
     "editor.fontSize": 14,
@@ -91,7 +96,7 @@
     "editor.fontFamily": "Cascadia Code",
     "jupyter.interactiveWindow.creationMode": "perFile",
     "workbench.startupEditor": "none",
-    "workbench.editor.tabSizingFixedMaxWidth": 50,
+    // "workbench.editor.tabSizingFixedMaxWidth": 50,
     "editor.scrollbar.horizontal": "hidden",
     "window.menuBarVisibility": "hidden",
     "zenMode.showTabs": "single",
@@ -99,5 +104,6 @@
     "workbench.editor.showTabs": "single",
     "window.commandCenter": false,
     "workbench.layoutControl.enabled": false,
-    "workbench.colorTheme": "Dark Horizon",
+    "python.defaultInterpreterPath": "J:\\dev\\tattoo-scheduler\\venv",
+    "workbench.colorTheme": "Gruvbox Dark Medium",
 }
