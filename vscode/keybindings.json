@@ -63,4 +63,24 @@
         "key": "ctrl+k",
         "command": "workbench.action.terminal.kill"
     },
+    {
+        "key": "ctrl+r ctrl+d",
+        "command": "workbench.view.debug",
+        "when": "viewContainer.workbench.view.debug.enabled"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "-workbench.view.debug",
+        "when": "viewContainer.workbench.view.debug.enabled"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "-dendron.delete",
+        "when": "dendron:pluginActive && shellExecutionSupported"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "workbench.view.extension.dendron-view",
+        "when": "viewContainer.workbench.view.extension.dendron-view.enabled"
+    },
 ]
