@@ -1,7 +1,7 @@
 " COMUM
 let mapleader = " "
 
-map <Esc> :noh<CR>
+map <Leader>h :noh<CR>
 
 " Desabilita compatibilidade com vi que pode causar tretas
 set nocompatible
@@ -12,19 +12,25 @@ filetype off
 " Habilita plugins detectarem o tipo de identacao do tipo de arquivo
 filetype plugin indent on
 
+filetype plugin on
+
 syntax on
 
 " Highlight da linha horizontalmente no cursor
 set cursorline
 
 " Highlight da linha verticalmente no cursor
-" set cursorcolumn
+set cursorcolumn
 
 " Linhas numeradas
 set number
 
 " Linhas relativas
 set relativenumber
+
+if v:version >= 800
+  " impede o vim de zoar silenciosamente com arquivos que não deveria
+  set nofixendofline
 
 " Mostra o status do arquivo
 set ruler
@@ -62,6 +68,11 @@ set wildmode=list:longest
 " Habilita buffers escondidos
 set hidden
 
+" plugins e algumas outras coisas precisam disso
+if has("syntax")
+  syntax enable
+endif
+
 " Renderizacao
 set ttyfast
 
@@ -69,7 +80,7 @@ set ttyfast
 set laststatus=2
 
 " Mostra o modo atual de edicao
-set showmode
+set noshowmode
 
 " Mostra comandos parciais na ultima linha da tela
 set showcmd
@@ -82,6 +93,8 @@ call plug#begin()
 
 " Tema
 Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
+ Plug 'itchyny/lightline.vim'
 
 " LSP e autocomplete
 Plug 'prabirshrestha/vim-lsp'
@@ -90,53 +103,60 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " NERDTree File Explorer
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 
 call plug#end()
 
 " Tema
-"let g:gruvbox_(option) = '(value)'
-colorscheme gruvbox
+let g:gruvbox_material_background='hard'
+
+if has('termguicolors')
+    set termguicolors
+endif
+
 set background=dark
-let g:gruvbox_contrast_dark='dark'
+
+colorscheme gruvbox-material
+
+let g:lightline = {'colorscheme' : 'gruvbox_material'}
 
 " Python LSP
-if executable('pylsp')
-    " pip install python-lsp-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pylsp',
-        \ 'cmd': {server_info->['pylsp']},
-        \ 'allowlist': ['python'],
-        \ })
-endif
-
-" Java LSP
-if executable('eclipse-jdt-ls')
-    au User lsp_setup call lsp#register_server({
-        \   'name': 'eclipse-jdt-ls',
-        \   'cmd': {server_info->[
-        \     'java',
-        \     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-        \     '-Dosgi.bundles.defaultStartLevel=4',
-        \     '-Declipse.product=org.eclipse.jdt.ls.core.product',
-        \     '-Dlog.level=ALL',
-        \     '-noverify',
-        \     '-Xmx1G',
-        \     '-jar',
-        \       expand('~/jdt-server/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'),
-        \     '-configuration',
-        \       expand('~/jdt-server/config_linux'),
-        \     '-data',
-        \       expand('~/jdt-server/data'),
-        \     '--add-modules=ALL-SYSTEM',
-        \     '--add-opens',
-        \       expand('~/jdt-server/java.base/java.util=ALL-UNNAMED'),
-        \     '--add-opens',
-        \       expand('~/jdt-server/java.base/java.lang=ALL-UNNAMED')
-        \   ]},
-        \   'allowlist': ['java'],
-        \ })
-endif
+"if executable('pylsp')
+"    " pip install python-lsp-server
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'pylsp',
+"        \ 'cmd': {server_info->['pylsp']},
+"        \ 'allowlist': ['python'],
+"        \ })
+"endif
+"
+"" Java LSP
+"if executable('eclipse-jdt-ls')
+"    au User lsp_setup call lsp#register_server({
+"        \   'name': 'eclipse-jdt-ls',
+"        \   'cmd': {server_info->[
+"        \     'java',
+"        \     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+"        \     '-Dosgi.bundles.defaultStartLevel=4',
+"        \     '-Declipse.product=org.eclipse.jdt.ls.core.product',
+"        \     '-Dlog.level=ALL',
+"        \     '-noverify',
+"        \     '-Xmx1G',
+"        \     '-jar',
+"        \       expand('~/jdt-server/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'),
+"        \     '-configuration',
+"        \       expand('~/jdt-server/config_linux'),
+"        \     '-data',
+"        \       expand('~/jdt-server/data'),
+"        \     '--add-modules=ALL-SYSTEM',
+"        \     '--add-opens',
+"        \       expand('~/jdt-server/java.base/java.util=ALL-UNNAMED'),
+"        \     '--add-opens',
+"        \       expand('~/jdt-server/java.base/java.lang=ALL-UNNAMED')
+"        \   ]},
+"        \   'allowlist': ['java'],
+"        \ })
+"endif
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
@@ -157,7 +177,7 @@ function! s:on_lsp_buffer_enabled() abort
     nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
     let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    autocmd! BufWritePre *.rs,*.go,*.py,*.java call execute('LspDocumentFormatSync')
 
 endfunction
 
@@ -166,3 +186,4 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+endif
