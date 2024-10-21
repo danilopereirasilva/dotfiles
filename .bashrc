@@ -11,7 +11,7 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
 fi
 export PATH
 
-PROMPT_COMMAND='PS1_CMD1=$(git branch --show-current 2>/dev/null)'; PS1='\[\e[38;5;153m\]\w\[\e[0m\] \[\e[38;5;221m\]${PS1_CMD1}\n\[\e[38;5;149m\]>\[\e[0m\] '
+PROMPT_COMMAND='PS1_CMD1=$(git branch --show-current 2>/dev/null)'; PS1='\[\e[38;5;242m\]\w\[\e[0m\] \[\e[38;5;172m\]${PS1_CMD1}\n\[\e[38;5;112m\]>\[\e[0m\] '
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
