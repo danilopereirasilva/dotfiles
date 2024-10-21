@@ -29,8 +29,9 @@ set number
 set relativenumber
 
 if v:version >= 800
-  " impede o vim de zoar silenciosamente com arquivos que não deveria
-  set nofixendofline
+    " impede o vim de zoar silenciosamente com arquivos que não deveria
+    set nofixendofline
+endif
 
 " Mostra o status do arquivo
 set ruler
@@ -70,7 +71,7 @@ set hidden
 
 " plugins e algumas outras coisas precisam disso
 if has("syntax")
-  syntax enable
+    syntax enable
 endif
 
 " Renderizacao
@@ -88,90 +89,35 @@ set showcmd
 " Cores vivas
 set termguicolors
 
-" PLUGINS
+" inicio vim-lsp
 call plug#begin()
 
 " Tema
 Plug 'morhetz/gruvbox'
 Plug 'sainnhe/gruvbox-material'
- Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 
 " LSP e autocomplete
 Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-" NERDTree File Explorer
-" Plug 'preservim/nerdtree'
+" Plug 'mattn/vim-lsp-settings'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
-
-" Tema
-let g:gruvbox_material_background='hard'
-
-if has('termguicolors')
-    set termguicolors
-endif
-
-set background=dark
-
-colorscheme gruvbox-material
-
-let g:lightline = {'colorscheme' : 'gruvbox_material'}
-
-" Python LSP
-"if executable('pylsp')
-"    " pip install python-lsp-server
-"    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'pylsp',
-"        \ 'cmd': {server_info->['pylsp']},
-"        \ 'allowlist': ['python'],
-"        \ })
-"endif
-"
-"" Java LSP
-"if executable('eclipse-jdt-ls')
-"    au User lsp_setup call lsp#register_server({
-"        \   'name': 'eclipse-jdt-ls',
-"        \   'cmd': {server_info->[
-"        \     'java',
-"        \     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-"        \     '-Dosgi.bundles.defaultStartLevel=4',
-"        \     '-Declipse.product=org.eclipse.jdt.ls.core.product',
-"        \     '-Dlog.level=ALL',
-"        \     '-noverify',
-"        \     '-Xmx1G',
-"        \     '-jar',
-"        \       expand('~/jdt-server/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'),
-"        \     '-configuration',
-"        \       expand('~/jdt-server/config_linux'),
-"        \     '-data',
-"        \       expand('~/jdt-server/data'),
-"        \     '--add-modules=ALL-SYSTEM',
-"        \     '--add-opens',
-"        \       expand('~/jdt-server/java.base/java.util=ALL-UNNAMED'),
-"        \     '--add-opens',
-"        \       expand('~/jdt-server/java.base/java.lang=ALL-UNNAMED')
-"        \   ]},
-"        \   'allowlist': ['java'],
-"        \ })
-"endif
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
     " Atalhos referentes ao LSP
-    nmap <buffer> gd <plug>(lsp-definition)
+    " nmap <buffer> gd <plug>(lsp-definition)
     nmap <buffer> gs <plug>(lsp-document-symbol-search)
     nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    " nmap <buffer> gr <plug>(lsp-references)
+    " nmap <buffer> gi <plug>(lsp-implementation)
+    " nmap <buffer> gt <plug>(lsp-type-definition)
+    " nmap <buffer> <leader>rn <plug>(lsp-rename)
     nmap <buffer> K <plug>(lsp-hover)
     nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
     nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
@@ -186,4 +132,83 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+" fim  vim-lsp
+
+" inicio CoC
+" configura TAB pra navegar nas sugestoes do autocomplete
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" configura ENTER pra confirmar selecao do autocomplete
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" navegacao de diagnostico
+nmap <silent> [g <plug>(coc-diagnostic-prev)
+nmap <silent> ]g <plug>(coc-diagnostic-next)
+
+" atalhos do tipo GoTo
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K para mostrar descricao em hover
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" da um highlight no simbolo e em suas referencias
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" renomeia simbolos
+nmap <silent> <Leader>rn <Plug>(coc-rename)
+
+" Atalhos para codeaction na selecao de bloco
+" Example: `<leader>aap` for current paragraph
+xmap <Leader>a  <Plug>(coc-codeaction-selected)
+nmap <Leader>a  <Plug>(coc-codeaction-selected)
+
+" codeaction na posicao do cursor
+nmap <Leader>ac  <Plug>(coc-codeaction-cursor)
+
+" codeaction em todo buffer
+nmap <Leader>as  <Plug>(coc-codeaction-source)
+
+" quickfix no diagnostico da linha atual
+nmap <Leader>qf  <Plug>(coc-fix-current)
+
+" codeaction para refatoracao de codigo
+nmap <silent> <Leader>re <Plug>(coc-codeaction-refactor)
+xmap <silent> <Leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <Leader>r  <Plug>(coc-codeaction-refactor-selected)
+" fim CoC
+
+
+" inicio Tema
+let g:gruvbox_material_background='hard'
+
+if has('termguicolors')
+    set termguicolors
 endif
+
+set background=dark
+
+colorscheme gruvbox-material
+
+let g:lightline = {'colorscheme' : 'gruvbox_material'}
+" fim Tema
