@@ -1,7 +1,35 @@
 " COMUM
+" Alguns remaps
 let mapleader = " "
 
+" abre o explorer
+nmap <Leader>ge :E<CR>
+
+" fecha o buffer atual
+nmap <Leader>x :bd<CR>
+
+" proximo buffer
+nmap <S-L> :bn<CR>
+
+" buffer anterior
+nmap <S-H> :bp<CR>
+
+" lista os buffers abertos
+nmap <Leader><Leader> :ls<CR>
+
+" limpa o highlight
 map <Leader>h :noh<CR>
+
+" adicionar ao path o diretorio desejado para busca
+nmap <Leader>pa :set path+=
+
+" busca arquivos no path
+nmap <Leader>sf :find 
+
+" procura e abre o arquivo para edicao
+nmap <Leader>ef :e **/
+
+" fim dos remaps
 
 " Desabilita compatibilidade com vi que pode causar tretas
 set nocompatible
@@ -27,6 +55,8 @@ set number
 
 " Linhas relativas
 set relativenumber
+
+set scrolloff=10
 
 if v:version >= 800
     " impede o vim de zoar silenciosamente com arquivos que não deveria
@@ -103,6 +133,8 @@ Plug 'prabirshrestha/vim-lsp'
 " Plug 'prabirshrestha/asyncomplete.vim'
 " Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Comentar
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
@@ -118,7 +150,7 @@ function! s:on_lsp_buffer_enabled() abort
     " nmap <buffer> gi <plug>(lsp-implementation)
     " nmap <buffer> gt <plug>(lsp-type-definition)
     " nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> K <plug>(lsp-hover)
+    " nmap <buffer> K <plug>(lsp-hover)
     nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
     nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
@@ -201,6 +233,7 @@ nmap <silent> <Leader>r  <Plug>(coc-codeaction-refactor-selected)
 
 " inicio Tema
 let g:gruvbox_material_background='hard'
+let g:gruvbox_material_better_performance = 1
 
 if has('termguicolors')
     set termguicolors
@@ -212,3 +245,4 @@ colorscheme gruvbox-material
 
 let g:lightline = {'colorscheme' : 'gruvbox_material'}
 " fim Tema
+
