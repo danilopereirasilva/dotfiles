@@ -2,6 +2,9 @@
 " Alguns remaps
 let mapleader = " "
 
+" escreve (salva) o buffer
+nmap <Leader>w :w<CR>
+
 " abre o explorer
 nmap <Leader>ge :E<CR>
 
