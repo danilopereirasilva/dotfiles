@@ -7,6 +7,10 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
   "icon_theme": "Colored Zed Icons Theme Light",
   "vim_mode": true,
   "ui_font_size": 15,
@@ -22,6 +26,6 @@
     "show": "never"
   },
   "buffer_line_height": {
-    "custom": 1.5
+    "custom": 1.7
   }
 }

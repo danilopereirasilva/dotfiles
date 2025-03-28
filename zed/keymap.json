@@ -22,7 +22,8 @@
       "space s t": "pane::DeploySearch", // Search Text
       "space space": "tab_switcher::Toggle",
       "space g e": "project_panel::ToggleFocus",
-      "space e": "workspace::ToggleLeftDock"
+      "space e": "workspace::ToggleLeftDock",
+      "space g d": "git::Diff"
     }
   },
   {
