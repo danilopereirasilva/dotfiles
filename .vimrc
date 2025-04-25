@@ -2,6 +2,7 @@
 " Alguns remaps
 let mapleader = " "
 
+
 " escreve (salva) o buffer
 nmap <Leader>w :w<CR>
 
@@ -21,7 +22,7 @@ nmap <S-H> :bp<CR>
 nmap <Leader><Leader> :ls<CR>
 
 " limpa o highlight
-map <Leader>h :noh<CR>
+nmap <Leader>h :noh<CR>
 
 " adicionar ao path o diretorio desejado para busca
 nmap <Leader>pa :set path+=
@@ -32,7 +33,26 @@ nmap <Leader>sf :find
 " procura e abre o arquivo para edicao
 nmap <Leader>ef :e **/
 
+" fecha o vim todo
+nmap <Leader>qq :qa<CR>
+
+" Troca entre telas
+nmap <silent> <C-h> <C-w>h
+nmap <silent> <C-j> <C-w>j
+nmap <silent> <C-k> <C-w>k
+nmap <silent> <C-l> <C-w>l
+
+" Mantém a seleção ao identar
+vnoremap < <gv
+vnoremap > >gv
+
+" Permite criar arquivos que ainda não existem no path
+map gf :edit <cfile><CR>
+
 " fim dos remaps
+"
+" netrw em modo arvore
+let g:netrw_liststyle=3
 
 " Desabilita compatibilidade com vi que pode causar tretas
 set nocompatible
@@ -122,13 +142,17 @@ set showcmd
 " Cores vivas
 set termguicolors
 
+" Clipboard
+set clipboard=unnamedplus
+
 " inicio vim-lsp
 call plug#begin()
 
 " Tema
 Plug 'morhetz/gruvbox'
 Plug 'sainnhe/gruvbox-material'
-Plug 'itchyny/lightline.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'rose-pine/vim'
 
 " LSP e autocomplete
 Plug 'prabirshrestha/vim-lsp'
@@ -138,6 +162,20 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Comentar
 Plug 'tpope/vim-commentary'
+
+" NERDtree
+Plug 'preservim/nerdtree'
+" abrir nerdtree
+nmap <Leader>nf :NERDTreeFind<CR>
+nmap <Leader>no :NERDTreeToggle<CR>
+
+" Start NERDTree and leave the cursor in it.
+autocmd VimEnter * NERDTree
+"
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
 
 call plug#end()
 
@@ -233,10 +271,9 @@ xmap <silent> <Leader>r  <Plug>(coc-codeaction-refactor-selected)
 nmap <silent> <Leader>r  <Plug>(coc-codeaction-refactor-selected)
 " fim CoC
 
-
 " inicio Tema
-let g:gruvbox_material_background='hard'
-let g:gruvbox_material_better_performance = 1
+" let g:gruvbox_material_background='medium'
+" let g:gruvbox_material_better_performance = 1
 
 if has('termguicolors')
     set termguicolors
@@ -244,8 +281,10 @@ endif
 
 set background=dark
 
-colorscheme gruvbox-material
+colorscheme rosepine
 
-let g:lightline = {'colorscheme' : 'gruvbox_material'}
+hi Normal guibg=NONE ctermbg=NONE
+
+
 " fim Tema
 
