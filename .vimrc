@@ -170,12 +170,12 @@ nmap <Leader>nf :NERDTreeFind<CR>
 nmap <Leader>no :NERDTreeToggle<CR>
 
 " Start NERDTree and leave the cursor in it.
-autocmd VimEnter * NERDTree
+" autocmd VimEnter * NERDTree
 "
 " Start NERDTree when Vim starts with a directory argument.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+"     \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
 
 call plug#end()
 
@@ -257,10 +257,10 @@ xmap <Leader>a  <Plug>(coc-codeaction-selected)
 nmap <Leader>a  <Plug>(coc-codeaction-selected)
 
 " codeaction na posicao do cursor
-nmap <Leader>ac  <Plug>(coc-codeaction-cursor)
+nmap <Leader>ca  <Plug>(coc-codeaction-cursor)
 
 " codeaction em todo buffer
-nmap <Leader>as  <Plug>(coc-codeaction-source)
+nmap <Leader>cs  <Plug>(coc-codeaction-source)
 
 " quickfix no diagnostico da linha atual
 nmap <Leader>qf  <Plug>(coc-fix-current)
@@ -272,8 +272,8 @@ nmap <silent> <Leader>r  <Plug>(coc-codeaction-refactor-selected)
 " fim CoC
 
 " inicio Tema
-" let g:gruvbox_material_background='medium'
-" let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_background='medium'
+let g:gruvbox_material_better_performance = 1
 
 if has('termguicolors')
     set termguicolors
@@ -281,7 +281,7 @@ endif
 
 set background=dark
 
-colorscheme rosepine
+colorscheme gruvbox-material
 
 hi Normal guibg=NONE ctermbg=NONE
 

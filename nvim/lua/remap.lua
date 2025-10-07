@@ -10,6 +10,10 @@ vim.keymap.set('n', '<leader>qq', ':q <CR>')
 vim.keymap.set('n', '<leader>w', ':w <CR>')
 vim.keymap.set('n', '<leader>x', ':bd <CR>')
 
+-- Buffer navigation
+vim.keymap.set('n', 'H', ':bprev <CR>')
+vim.keymap.set('n', 'L', ':bnext <CR>')
+
 -- Moves selected line up (J) and down (K)
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
