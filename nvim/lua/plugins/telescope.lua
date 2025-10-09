@@ -14,6 +14,8 @@ return {
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
       vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = 'Telescope show commands' })
       vim.keymap.set('n', '<leader>qf', builtin.quickfix, { desc = 'Telescope quickfix' })
+      vim.keymap.set('n', '<leader>st', builtin.grep_string, { desc = 'Telescope grep string' })
+      vim.keymap.set('n', '<leader>ss', builtin.lsp_document_symbols, { desc = 'Telescope search symbols' })
     end
   },
   {
@@ -28,6 +30,13 @@ return {
         }
       }
       require("telescope").load_extension("ui-select")
+    end
+  },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'make',
+    config = function()
+      require('telescope').load_extension('fzf')
     end
   }
 }
