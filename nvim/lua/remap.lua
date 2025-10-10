@@ -9,6 +9,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>qq', ':q <CR>')
 vim.keymap.set('n', '<leader>w', ':w <CR>')
 vim.keymap.set('n', '<leader>x', ':bd <CR>')
+vim.keymap.set('n', '<leader>sv', ':vsplit <CR>')
+vim.keymap.set('n', '<leader>sh', ':split <CR>')
 
 -- Buffer navigation
 vim.keymap.set('n', 'H', ':bprev <CR>')
