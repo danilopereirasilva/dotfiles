@@ -5,6 +5,7 @@ return {
       { "github/copilot.vim" },
       { "nvim-lua/plenary.nvim", branch = "master" },
     },
+    event = { 'BufReadPre', 'BufNewFile' },
     build = "make tiktoken",
     opts = {
       -- See Configuration section for options
