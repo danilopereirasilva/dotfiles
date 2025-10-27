@@ -11,7 +11,9 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>qa', ':qa <CR>', { desc = 'Quit Neovim' })
 vim.keymap.set('n', '<leader>qq', ':q <CR>', { desc = 'Close window?' })
 vim.keymap.set('n', '<leader>w', ':w <CR>', { desc = 'Save buffer' })
-vim.keymap.set('n', '<leader>x', ':bd <CR>', { desc = 'Close buffer' })
+vim.keymap.set('n', '<leader>x', '<cmd>BufferClose<CR>', { desc = 'Close buffer' })
+vim.keymap.set('n', '<leader>xo', '<cmd>BufferCloseAllButCurrent<CR>', { desc = 'Close other buffers' })
+vim.keymap.set('n', '<leader>xr', '<cmd>BufferRestore<CR>', { desc = 'Restore last closed buffer' })
 
 -- Splits
 vim.keymap.set('n', '<leader>sv', '<C-w>v', { desc = 'Split vertically' })
@@ -28,8 +30,8 @@ vim.keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current bu
 
 
 -- Buffer navigation
-vim.keymap.set('n', 'H', ':bprev <CR>')
-vim.keymap.set('n', 'L', ':bnext <CR>')
+vim.keymap.set('n', 'H', '<cmd>BufferPrevious<CR>')
+vim.keymap.set('n', 'L', '<cmd>BufferNext<CR>')
 
 -- Moves selected line up (J) and down (K)
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

@@ -21,6 +21,7 @@ require("lazy").setup({
   spec = {
     -- import plugins
     { import = "danilo.plugins" },
+    { import = "danilo.plugins.lsp" },
   },
   -- automatically check for plugin updates
   checker = {

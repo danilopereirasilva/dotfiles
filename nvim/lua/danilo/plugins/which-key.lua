@@ -5,5 +5,10 @@ return {
     vim.o.timeout = true
     vim.o.timeoutlen = 500
   end,
-  opts = {}
+  opts = {
+    preset = 'helix',
+    notify = true,
+    title = true,
+    title_pos = 'center',
+  }
 }
